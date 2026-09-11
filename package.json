@@ -8,7 +8,7 @@
     "build": "vp build && vp exec vue-tsc -b",
     "preview": "vp preview",
     "prepare": "vp config",
-    "catalog:check": "node scripts/refresh-catalog.mjs"
+    "catalog:check": "node scripts/refresh-catalog.ts"
   },
   "dependencies": {
     "@nuxt/ui": "^4.11.1",

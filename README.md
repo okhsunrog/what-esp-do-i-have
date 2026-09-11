@@ -83,6 +83,8 @@ src/data/sources.ts      source URLs
 src/lib/normalize.ts     input normalization
 src/lib/catalog.ts       lookup indexes
 src/lib/decoder.ts       the decoder
+src/lib/drift.ts         catalog-vs-upstream comparison
+scripts/refresh-catalog.ts  scrapes the listings and reports drift
 ```
 
 ## Keeping it current
@@ -120,7 +122,15 @@ datasheet tables, which a person has to read before changing a row.
 ```bash
 vp install
 vp dev
-vp test
+vp test           # 75 tests across normalization, decoding, drift and data integrity
 vp check
 vp run build
 ```
+
+Everything is TypeScript, including the scraper — it runs on Node's own type
+stripping, so there is no build step for it.
+
+The data-integrity tests are the point: they assert that every stored flash and
+PSRAM value agrees with Espressif's documented suffix convention, that no board
+name collides with a real part number, that no row claims both a PSRAM size and
+an unknown PSRAM size, and that every correction cites the sources that disagree.
