@@ -117,10 +117,44 @@ h1 {
 .result strong {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+.result-label {
+  margin: 0 0 0.25rem !important;
+  color: #1f5d63;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem !important;
+  font-weight: 700;
+}
 .result p {
   margin: 0.25rem 0 0;
   font-size: 0.875rem;
   line-height: 1.45;
+}
+.result a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: #1f5d63;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0.8rem 0 0;
+}
+.specs div {
+  display: flex;
+  gap: 0.4rem;
+}
+.specs dt {
+  color: #667475;
+  font-size: 0.8rem;
+}
+.specs dd {
+  margin: 0;
+  color: #354842;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 .notes {
   display: grid;
