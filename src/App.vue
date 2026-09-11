@@ -34,9 +34,8 @@ watch(marking, syncUrl);
 <template>
   <UApp>
     <main class="min-h-screen">
-      <header class="shell flex items-center justify-between py-6">
+      <header class="shell flex items-center py-6">
         <a class="brand" href="./" aria-label="What ESP do I have?">ESP?</a>
-        <span class="text-sm text-muted">Espressif markings</span>
       </header>
 
       <section class="shell hero-section">
