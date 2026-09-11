@@ -1,57 +1,41 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { chips, moduleMarkingSourceUrl, type Chip } from "./data/chips";
+import { computed, onMounted, ref, watch } from "vue";
+import CatalogBrowser from "./components/CatalogBrowser.vue";
+import ResultCard from "./components/ResultCard.vue";
+import { sources } from "./data/sources";
+import { counts } from "./lib/catalog";
+import { decode } from "./lib/decoder";
+
+const EXAMPLES = ["ESP32-C6-WROOM-1-N8", "ESP32-S3FH4R2", "MBH4", "ESP8684-WROOM-03-H4X"];
 
 const marking = ref("");
-const result = ref<DecodeResult | null>(null);
+const result = computed(() => decode(marking.value));
 
-type DecodeResult =
-  | { kind: "chip"; chip: Chip }
-  | { kind: "module-spec"; status: string; temperature: string; flashMb: number; psramMb?: number }
-  | { kind: "unknown" };
-
-const normalizedMarking = computed(() => marking.value.trim().toUpperCase().replace(/\s+/g, " "));
-
-function decode() {
-  const compact = normalizedMarking.value.replace(/[^A-Z0-9]/g, "");
-
-  if (!compact) {
-    result.value = null;
-    return;
-  }
-
-  const chip = chips.find((candidate) =>
-    [candidate.partNumber, ...candidate.aliases]
-      .map((name) => name.replace(/[^A-Z0-9]/g, ""))
-      .includes(compact),
-  );
-
-  if (chip) {
-    result.value = { kind: "chip", chip };
-    return;
-  }
-
-  const moduleSpec = compact.match(/^([A-Z0-9]{2})([NH])(16|32|2|4|8)(R[28])?$/);
-  if (moduleSpec) {
-    result.value = {
-      kind: "module-spec",
-      status: moduleSpec[1],
-      temperature: moduleSpec[2] === "H" ? "105 °C" : "85 °C / 65 °C",
-      flashMb: Number(moduleSpec[3]),
-      psramMb: moduleSpec[4] ? Number(moduleSpec[4].slice(1)) : undefined,
-    };
-    return;
-  }
-
-  result.value = { kind: "unknown" };
+function pick(value: string) {
+  marking.value = value;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+function syncUrl(value: string) {
+  const url = new URL(window.location.href);
+  if (value.trim()) url.searchParams.set("m", value.trim());
+  else url.searchParams.delete("m");
+  window.history.replaceState(null, "", url);
+}
+
+onMounted(() => {
+  const initial = new URL(window.location.href).searchParams.get("m");
+  if (initial) marking.value = initial;
+});
+
+watch(marking, syncUrl);
 </script>
 
 <template>
   <UApp>
-    <main class="min-h-screen bg-default text-default">
+    <main class="min-h-screen">
       <header class="shell flex items-center justify-between py-6">
-        <a class="brand" href="/" aria-label="What ESP do I have?">ESP?</a>
+        <a class="brand" href="./" aria-label="What ESP do I have?">ESP?</a>
         <span class="text-sm text-muted">Espressif markings</span>
       </header>
 
@@ -59,103 +43,65 @@ function decode() {
         <p class="kicker">Decode, don't guess</p>
         <h1>Which ESP<br />do I have?</h1>
         <p class="lead">
-          Enter the code printed on a chip or module. See what it actually means — and where the
-          answer comes from.
+          Type the code printed on a chip or module. Every answer says whether it is silicon or a
+          module, where each field came from, and what the marking cannot tell you.
         </p>
 
-        <form class="decoder" @submit.prevent="decode">
+        <form class="decoder" @submit.prevent>
           <label for="marking">MARKING</label>
           <div class="decoder-row">
             <UInput
               id="marking"
               v-model="marking"
               size="xl"
-              placeholder="e.g. ESP32-C6-MINI-1-H4"
+              placeholder="e.g. ESP32-C6-WROOM-1-N8"
               autocomplete="off"
+              spellcheck="false"
               class="decoder-input"
             />
-            <UButton type="submit" size="xl" color="primary" icon="i-lucide-scan-line">
-              Decode marking
-            </UButton>
           </div>
-          <p class="hint">Case and spacing do not matter. Photo lookup is coming later.</p>
+          <p class="hint">
+            Case and separators do not matter — <code>esp32 c6 wroom 1 n8</code> works too.
+          </p>
+          <div class="chips examples">
+            <span class="chips-label">Try</span>
+            <button v-for="e in EXAMPLES" :key="e" type="button" @click="pick(e)">{{ e }}</button>
+          </div>
         </form>
 
-        <div v-if="result?.kind === 'chip'" class="result" role="status">
-          <UIcon name="i-lucide-flask-conical" class="result-icon" />
-          <div>
-            <p class="result-label">Exact part-number match</p>
-            <strong>{{ result.chip.partNumber }}</strong>
-            <dl class="specs">
-              <div>
-                <dt>Family</dt>
-                <dd>{{ result.chip.family }}</dd>
-              </div>
-              <div>
-                <dt>Package</dt>
-                <dd>{{ result.chip.package }}</dd>
-              </div>
-              <div v-if="result.chip.flashMb">
-                <dt>Flash</dt>
-                <dd>{{ result.chip.flashMb }} MB</dd>
-              </div>
-              <div v-if="result.chip.psramMb">
-                <dt>PSRAM</dt>
-                <dd>{{ result.chip.psramMb }} MB</dd>
-              </div>
-            </dl>
-            <a :href="result.chip.sourceUrl" target="_blank" rel="noreferrer"
-              >View official source</a
-            >
-          </div>
-        </div>
-
-        <div v-else-if="result?.kind === 'module-spec'" class="result" role="status">
-          <UIcon name="i-lucide-info" class="result-icon" />
-          <div>
-            <p class="result-label">Module specification identifier — partial match</p>
-            <strong>{{ normalizedMarking }}</strong>
-            <p>
-              {{ result.status }} is a product-status/revision identifier; this code alone does not
-              identify the module family. It does indicate {{ result.flashMb }} MB flash,
-              {{ result.temperature }} operation,
-              <template v-if="result.psramMb">and {{ result.psramMb }} MB PSRAM.</template
-              ><template v-else>and no PSRAM field.</template>
-            </p>
-            <a :href="moduleMarkingSourceUrl" target="_blank" rel="noreferrer"
-              >View official convention</a
-            >
-          </div>
-        </div>
-
-        <div v-else-if="result?.kind === 'unknown'" class="result" role="status">
-          <UIcon name="i-lucide-search-x" class="result-icon" />
-          <div>
-            <p class="result-label">No confirmed match yet</p>
-            <strong>{{ normalizedMarking }}</strong>
-            <p>
-              Try the full product name from the chip or module. This database only returns
-              documented matches.
-            </p>
-          </div>
-        </div>
+        <ResultCard v-if="result" :result="result" @pick="pick" />
       </section>
 
-      <section class="shell notes" aria-label="What the decoder will do">
+      <CatalogBrowser @pick="pick" />
+
+      <section class="shell notes" aria-label="How this database is built">
         <article>
           <span>01</span>
           <h2>Chip or module</h2>
-          <p>Keep silicon, a finished module and a development board clearly separate.</p>
+          <p>
+            {{ counts.socParts }} SoC ordering codes across {{ counts.socFamilies }} series, and
+            {{ counts.moduleParts }} module ordering codes across
+            {{ counts.moduleFamilies }} families — kept clearly apart.
+          </p>
         </article>
         <article>
           <span>02</span>
-          <h2>Confidence level</h2>
-          <p>Distinguish an exact answer from a likely decode or an unknown suffix.</p>
+          <h2>Marked evidence</h2>
+          <p>
+            Each field says whether it was read from a datasheet table, from the product page, or
+            decoded from Espressif's documented naming convention.
+          </p>
         </article>
         <article>
           <span>03</span>
-          <h2>Verifiable sources</h2>
-          <p>Every match will point to a datasheet or the manufacturer's documentation.</p>
+          <h2>Espressif only</h2>
+          <p>
+            Built from
+            <a :href="sources.socListing" target="_blank" rel="noreferrer">espressif.com</a>, the
+            module datasheets and
+            <a :href="sources.packagingRoot" target="_blank" rel="noreferrer">ESP-Packaging</a>. No
+            marketplace or forum data.
+          </p>
         </article>
       </section>
     </main>
