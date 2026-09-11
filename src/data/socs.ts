@@ -1,5 +1,5 @@
 // AUTO-GENERATED from Espressif's official product listings and module datasheets.
-// Regenerate with `vp run catalog:refresh` (see scripts/refresh-catalog.md).
+// Run `vp run catalog:check` to see what has changed on espressif.com since.
 // Do not hand-edit rows; add corrections to src/data/corrections.ts instead.
 
 import type { SocPart } from "./types";
