@@ -4,6 +4,7 @@ import ui from "@nuxt/ui/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/what-esp-do-i-have/",
   staged: {
     "*": "vp check --fix",
   },
