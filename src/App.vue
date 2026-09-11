@@ -6,7 +6,13 @@ import { sources } from "./data/sources";
 import { counts } from "./lib/catalog";
 import { decode } from "./lib/decoder";
 
-const EXAMPLES = ["ESP32-C6-WROOM-1-N8", "ESP32-S3FH4R2", "MBH4", "ESP8684-WROOM-03-H4X"];
+const EXAMPLES = [
+  "ESP32-C6-WROOM-1-N8",
+  "ESP32-S3FH4R2",
+  "MBH4",
+  "ESP32-S3-Touch-LCD-1.85",
+  "303a:1001",
+];
 
 const marking = ref("");
 const result = computed(() => decode(marking.value));
@@ -42,8 +48,8 @@ watch(marking, syncUrl);
         <p class="kicker">Decode, don't guess</p>
         <h1>Which ESP<br />do I have?</h1>
         <p class="lead">
-          Type the code printed on a chip or module. Every answer says whether it is silicon or a
-          module, where each field came from, and what the marking cannot tell you.
+          Type the code printed on a chip, a module or a dev board. Every answer says what kind of
+          thing it is, where each field came from, and what the marking cannot tell you.
         </p>
 
         <form class="decoder" @submit.prevent>
@@ -76,30 +82,30 @@ watch(marking, syncUrl);
       <section class="shell notes" aria-label="How this database is built">
         <article>
           <span>01</span>
-          <h2>Chip or module</h2>
+          <h2>Chip, module or board</h2>
           <p>
-            {{ counts.socParts }} SoC ordering codes across {{ counts.socFamilies }} series, and
-            {{ counts.moduleParts }} module ordering codes across
-            {{ counts.moduleFamilies }} families — kept clearly apart.
+            {{ counts.socParts }} SoC and {{ counts.moduleParts }} module ordering codes from
+            Espressif, plus {{ counts.boards }} development boards from
+            {{ counts.boardVendors }} vendors — never conflated.
           </p>
         </article>
         <article>
           <span>02</span>
           <h2>Marked evidence</h2>
           <p>
-            Each field says whether it was read from a datasheet table, from the product page, or
-            decoded from Espressif's documented naming convention.
+            Each field says whether it was read from a datasheet table, a vendor's own docs, a board
+            manifest, or decoded from Espressif's documented naming convention.
           </p>
         </article>
         <article>
           <span>03</span>
-          <h2>Espressif only</h2>
+          <h2>Vendor sources</h2>
           <p>
-            Built from
+            Silicon and modules from
             <a :href="sources.socListing" target="_blank" rel="noreferrer">espressif.com</a>, the
-            module datasheets and
-            <a :href="sources.packagingRoot" target="_blank" rel="noreferrer">ESP-Packaging</a>. No
-            marketplace or forum data.
+            datasheets and
+            <a :href="sources.packagingRoot" target="_blank" rel="noreferrer">ESP-Packaging</a>.
+            Boards from whoever makes them. No marketplace or forum data.
           </p>
         </article>
       </section>

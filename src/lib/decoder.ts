@@ -8,13 +8,16 @@ import {
   socSpecSuffix,
 } from "../data/marking";
 import { chipMarkingUrl, moduleMarkingSourceUrl, sources } from "../data/sources";
-import type { Evidence, ModuleFamily, ModulePart, SocPart } from "../data/types";
+import type { DevBoard, Evidence, ModuleFamily, ModulePart, SocPart } from "../data/types";
 import {
+  boardIndex,
+  boardsUsingModule,
   longestFamilyPrefix,
   modulePartIndex,
   moduleFamilyIndex,
   search,
   socIndex,
+  usbIndex,
 } from "./catalog";
 import { normalize, tidy } from "./normalize";
 
@@ -23,6 +26,8 @@ export type Confidence = "exact" | "partial" | "unknown";
 export type ResultKind =
   | "soc"
   | "module"
+  | "board"
+  | "usb-id"
   | "module-family"
   | "specification-identifier"
   | "chip-memory-code"
@@ -54,6 +59,8 @@ export interface DecodeResult {
   links: Link[];
   /** Other part numbers in the same module family. */
   siblings?: string[];
+  /** Development boards that carry this module. */
+  boards?: string[];
   suggestions?: string[];
 }
 
@@ -216,6 +223,9 @@ function decodeModulePart(
     corrections: correctionsFor(part.partNumber, family.name, family.socFamily),
     links: moduleLinks(family),
     siblings: family.parts.map((p) => p.partNumber).filter((p) => p !== part.partNumber),
+    boards: boardsUsingModule(family.name)
+      .slice(0, 24)
+      .map((b) => b.name),
   };
 }
 
@@ -451,6 +461,120 @@ function decodeChipMemoryCode(normalized: string, input: string): DecodeResult |
   };
 }
 
+const EVIDENCE_CAVEAT: Partial<Record<Evidence, string>> = {
+  "board-manifest": "Read from a pioarduino board manifest, not from the vendor's own datasheet.",
+  "arduino-core":
+    "Read from espressif/arduino-esp32 boards.txt, not from the vendor's own datasheet.",
+};
+
+function decodeBoard(board: DevBoard, normalized: string, input: string): DecodeResult {
+  const fields: Field[] = [
+    { label: "Type", value: "Development board", evidence: board.evidence },
+    { label: "Vendor", value: board.vendor, evidence: board.evidence },
+    { label: "SoC series", value: board.family, evidence: board.evidence },
+  ];
+  if (board.module)
+    fields.push({ label: "Module on board", value: board.module, evidence: board.evidence });
+  if (board.chip)
+    fields.push({ label: "SoC on board", value: board.chip, evidence: board.evidence });
+  if (board.flashMb !== undefined)
+    fields.push({ label: "Flash", value: `${board.flashMb} MB`, evidence: board.evidence });
+  if (board.psramMb !== undefined)
+    fields.push({ label: "PSRAM", value: `${board.psramMb} MB`, evidence: board.evidence });
+  else if (board.psramUnsized)
+    fields.push({ label: "PSRAM", value: "present, size not stated", evidence: board.evidence });
+  if (board.usbVid && board.usbPid)
+    fields.push({
+      label: "USB ID",
+      value: `${board.usbVid}:${board.usbPid}`,
+      evidence: board.evidence,
+    });
+  if (board.onboard?.length)
+    fields.push({
+      label: "On-board",
+      value: board.onboard.join(", "),
+      evidence: board.evidence,
+    });
+
+  const notes: string[] = [];
+  if (board.description) notes.push(board.description);
+  const caveat = EVIDENCE_CAVEAT[board.evidence];
+  if (caveat) notes.push(caveat);
+  if (board.vendor !== "Espressif")
+    notes.push(
+      `A board is not an Espressif product — flash, PSRAM and the module fitted are ` +
+        `what ${board.vendor} documents, and a vendor may change them between revisions.`,
+    );
+
+  const links: Link[] = [];
+  if (board.sourceUrl) links.push({ label: `${board.vendor} documentation`, url: board.sourceUrl });
+  if (board.vendor === "Espressif")
+    links.push({ label: "Espressif DevKits", url: sources.devkitListing });
+
+  return {
+    input,
+    normalized,
+    kind: "board",
+    confidence: "exact",
+    title: board.name,
+    subtitle: `${board.vendor} · ${board.family} board`,
+    fields,
+    notes,
+    corrections: correctionsFor(board.module, board.chip, board.family),
+    links,
+    siblings: board.aliases,
+  };
+}
+
+/** `303a:1001`, `0x303A 0x1001` — the USB ID a plugged-in board enumerates as. */
+function decodeUsbId(normalized: string, input: string): DecodeResult | undefined {
+  const match = /^(?:0X)?([0-9A-F]{4})(?:0X)?([0-9A-F]{4})$/.exec(normalized);
+  if (!match || !/[:\s]|0[xX]/.test(input)) return undefined;
+  const vid = `0x${match[1]}`;
+  const pid = `0x${match[2]}`;
+  const hits = usbIndex.get(`${vid}:${pid}`.toLowerCase()) ?? [];
+  const espressif = vid.toLowerCase() === "0x303a";
+  if (!hits.length && !espressif) return undefined;
+
+  const fields: Field[] = [
+    { label: "Type", value: "USB vendor / product ID", evidence: "board-manifest" },
+    {
+      label: "Vendor ID",
+      value: espressif ? `${vid} — Espressif Systems` : vid,
+      evidence: "board-manifest",
+    },
+    { label: "Product ID", value: pid, evidence: "board-manifest" },
+  ];
+  if (hits.length)
+    fields.push({
+      label: "Known boards",
+      value: String(hits.length),
+      evidence: hits[0].evidence,
+    });
+
+  return {
+    input,
+    normalized,
+    kind: "usb-id",
+    confidence: "partial",
+    title: `${vid}:${pid}`,
+    subtitle: "USB identity, not a part number",
+    fields,
+    notes: [
+      hits.length
+        ? "Several boards can share one USB ID, so this narrows the field rather than " +
+          "identifying the board."
+        : "No board in this database claims that ID. On Espressif silicon the built-in " +
+          "USB peripheral commonly reports 0x303a:0x1001 regardless of the board.",
+      "A USB-to-UART bridge reports the bridge's own ID (Silicon Labs, WCH, FTDI), " +
+        "not the ESP chip's.",
+    ],
+    corrections: [],
+    links: [{ label: "Espressif DevKits", url: sources.devkitListing }],
+    suggestions: hits.slice(0, 12).map((b) => b.name),
+  };
+}
+
 function decodeDataMatrix(normalized: string, input: string): DecodeResult | undefined {
   if (!dataMatrix.pattern.test(normalized)) return undefined;
   const { reserved, dateCode, macId } = dataMatrix.describe(normalized);
@@ -488,6 +612,9 @@ export function decode(rawInput: string): DecodeResult | null {
   const soc = socIndex.get(normalized);
   if (soc) return decodeSoc(soc, normalized, input);
 
+  const board = boardIndex.get(normalized);
+  if (board) return decodeBoard(board, normalized, input);
+
   const family = moduleFamilyIndex.get(normalized);
   if (family) return decodeModuleFamily(family, normalized, input);
 
@@ -502,6 +629,7 @@ export function decode(rawInput: string): DecodeResult | null {
   }
 
   return (
+    decodeUsbId(normalized, input) ??
     decodeSpecIdentifier(normalized, input) ??
     decodeDataMatrix(normalized, input) ??
     decodeChipMemoryCode(normalized, input) ?? {
@@ -521,7 +649,7 @@ export function decode(rawInput: string): DecodeResult | null {
         { label: "Module product listing", url: sources.moduleListing },
       ],
       suggestions: search(input).map((hit) =>
-        "partNumber" in hit ? hit.partNumber : hit.part.partNumber,
+        "partNumber" in hit ? hit.partNumber : "name" in hit ? hit.name : hit.part.partNumber,
       ),
     }
   );

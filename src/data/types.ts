@@ -5,7 +5,13 @@ export type Evidence =
   /** Read from the product listing on espressif.com. */
   | "product-listing"
   /** Decoded from Espressif's documented part-number convention. */
-  | "convention";
+  | "convention"
+  /** Read from the board vendor's own documentation. */
+  | "vendor-docs"
+  /** Read from a pioarduino board manifest. */
+  | "board-manifest"
+  /** Read from espressif/arduino-esp32 boards.txt. */
+  | "arduino-core";
 
 export type Lifecycle = "eol" | "nrnd" | "recommended" | "sample" | "preliminary";
 
@@ -63,4 +69,34 @@ export interface ModuleFamily {
   datasheetUrl?: string;
   sourceUrl: string;
   parts: ModulePart[];
+}
+
+/**
+ * A development board. Unlike SoCs and modules, boards come from many vendors,
+ * so each row records the vendor and the source it was read from — a board is
+ * only as trustworthy as the vendor documenting it.
+ */
+export interface DevBoard {
+  kind: "board";
+  name: string;
+  /** Other spellings of the same board, e.g. with the vendor name prefixed. */
+  aliases?: string[];
+  vendor: string;
+  /** SoC series on the board, e.g. `ESP32-S3`. */
+  family: string;
+  flashMb?: number;
+  psramMb?: number;
+  /** Board is documented as having PSRAM, but the size is not stated. */
+  psramUnsized?: boolean;
+  /** SoC ordering code when the vendor names it. */
+  chip?: string;
+  /** Module ordering code when the board carries one. */
+  module?: string;
+  /** USB vendor/product id the board enumerates as. */
+  usbVid?: string;
+  usbPid?: string;
+  onboard?: string[];
+  description?: string;
+  sourceUrl?: string;
+  evidence: Evidence;
 }

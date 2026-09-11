@@ -2,6 +2,7 @@
 export const sources = {
   socListing: "https://www.espressif.com/en/products/socs",
   moduleListing: "https://www.espressif.com/en/products/modules",
+  devkitListing: "https://www.espressif.com/en/products/devkits",
   packagingRoot: "https://docs.espressif.com/projects/esp-packaging/en/latest/",
 } as const;
 

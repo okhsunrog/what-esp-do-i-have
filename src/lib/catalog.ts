@@ -1,6 +1,7 @@
+import { devBoards } from "../data/boards";
 import { moduleFamilies } from "../data/modules";
 import { socParts } from "../data/socs";
-import type { ModuleFamily, ModulePart, SocPart } from "../data/types";
+import type { DevBoard, ModuleFamily, ModulePart, SocPart } from "../data/types";
 import { normalize } from "./normalize";
 
 export interface ModuleHit {
@@ -40,6 +41,19 @@ for (const family of moduleFamilies) {
   }
 }
 
+export const boardIndex = new Map<string, DevBoard>();
+/** USB vid:pid -> the boards known to enumerate with it. */
+export const usbIndex = new Map<string, DevBoard[]>();
+for (const board of devBoards) {
+  for (const key of [board.name, ...(board.aliases ?? [])]) {
+    boardIndex.set(normalize(key), board);
+  }
+  if (board.usbVid && board.usbPid) {
+    const id = `${board.usbVid}:${board.usbPid}`.toLowerCase();
+    usbIndex.set(id, [...(usbIndex.get(id) ?? []), board]);
+  }
+}
+
 export const allModuleParts: ModuleHit[] = moduleFamilies.flatMap((family) =>
   family.parts.map((part) => ({ family, part })),
 );
@@ -49,6 +63,8 @@ export const counts = {
   moduleFamilies: moduleFamilies.length,
   moduleParts: allModuleParts.length,
   socFamilies: new Set(socParts.map((p) => p.family)).size,
+  boards: devBoards.length,
+  boardVendors: new Set(devBoards.map((b) => b.vendor)).size,
 };
 
 export function socByPartNumber(partNumber: string): SocPart | undefined {
@@ -72,15 +88,24 @@ export function longestFamilyPrefix(key: string): ModuleFamily | undefined {
 }
 
 /** Catalog entries whose normalized name contains the query, for suggestions. */
-export function search(query: string, limit = 8): (SocPart | ModuleHit)[] {
+export function search(query: string, limit = 8): (SocPart | ModuleHit | DevBoard)[] {
   const key = normalize(query);
   if (key.length < 3) return [];
-  const hits: (SocPart | ModuleHit)[] = [];
+  const hits: (SocPart | ModuleHit | DevBoard)[] = [];
   for (const [name, part] of socIndex) {
     if (name.includes(key)) hits.push(part);
   }
   for (const [name, hit] of modulePartIndex) {
     if (name.includes(key)) hits.push(hit);
   }
+  for (const [name, board] of boardIndex) {
+    if (name.includes(key)) hits.push(board);
+  }
   return hits.slice(0, limit);
+}
+
+/** Boards that carry a given module ordering code or module family. */
+export function boardsUsingModule(moduleName: string): DevBoard[] {
+  const key = normalize(moduleName);
+  return devBoards.filter((b) => b.module && normalize(b.module).startsWith(key));
 }

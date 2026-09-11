@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import { moduleFamilies } from "../data/modules";
 import { socParts } from "../data/socs";
+import { devBoards } from "../data/boards";
 import { allModuleParts, counts } from "./catalog";
 import { decode } from "./decoder";
 
@@ -192,5 +193,70 @@ describe("catalog integrity", () => {
   it("covers every current SoC series", () => {
     expect(counts.socFamilies).toBeGreaterThanOrEqual(14);
     expect(counts.moduleParts).toBeGreaterThanOrEqual(200);
+  });
+});
+
+describe("development boards", () => {
+  it("identifies an Espressif dev kit as a board, not a module", () => {
+    const result = decode("ESP32-S3-DevKitC-1");
+    expect(result?.kind).toBe("board");
+    expect(field(result, "Type")).toBe("Development board");
+    expect(field(result, "Vendor")).toBe("Espressif");
+    expect(field(result, "SoC series")).toBe("ESP32-S3");
+  });
+
+  it("resolves a third-party board and names its vendor", () => {
+    const result = decode("ESP32-S3-Touch-LCD-1.85");
+    expect(result?.kind).toBe("board");
+    expect(field(result, "Vendor")).toBe("Waveshare");
+  });
+
+  it("accepts the vendor-prefixed spelling of the same board", () => {
+    expect(decode("Waveshare ESP32-S3-Zero")?.title).toBe(decode("ESP32-S3-Zero")?.title);
+  });
+
+  it("warns that a non-Espressif board's specs are the vendor's claim", () => {
+    const result = decode("ESP32-S3-Zero");
+    expect(result?.notes.join(" ")).toMatch(/not an Espressif product/i);
+  });
+
+  it("links a module to the boards that carry it", () => {
+    const result = decode("ESP32-C6-WROOM-1-N8");
+    expect(Array.isArray(result?.boards)).toBe(true);
+  });
+});
+
+describe("USB identity", () => {
+  it("decodes a vid:pid pair without claiming it identifies a board", () => {
+    const result = decode("303a:1001");
+    expect(result?.kind).toBe("usb-id");
+    expect(result?.confidence).toBe("partial");
+    expect(field(result, "Vendor ID")).toMatch(/Espressif/);
+    expect(result?.notes.join(" ")).toMatch(/USB-to-UART bridge/i);
+  });
+
+  it("does not mistake a plain 8-character code for a USB ID", () => {
+    expect(decode("303A1001")?.kind).not.toBe("usb-id");
+  });
+});
+
+describe("board catalog integrity", () => {
+  it("every board resolves to itself", () => {
+    for (const board of devBoards) {
+      expect(decode(board.name)?.title, board.name).toBe(board.name);
+    }
+  });
+
+  it("every board records a vendor, family and evidence", () => {
+    for (const b of devBoards) {
+      expect(b.vendor, b.name).toBeTruthy();
+      expect(b.family, b.name).toMatch(/^ESP/);
+      expect(b.evidence, b.name).toBeTruthy();
+    }
+  });
+
+  it("covers a wide range of vendors", () => {
+    expect(counts.boards).toBeGreaterThanOrEqual(500);
+    expect(counts.boardVendors).toBeGreaterThanOrEqual(50);
   });
 });

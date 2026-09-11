@@ -8,6 +8,8 @@ const emit = defineEmits<{ pick: [value: string] }>();
 const KIND_LABEL: Record<DecodeResult["kind"], string> = {
   soc: "SoC",
   module: "Module",
+  board: "Dev board",
+  "usb-id": "USB ID",
   "module-family": "Module family",
   "specification-identifier": "Specification identifier",
   "chip-memory-code": "Chip memory code",
@@ -25,6 +27,9 @@ const EVIDENCE_LABEL: Record<string, string> = {
   datasheet: "datasheet",
   "product-listing": "product page",
   convention: "decoded",
+  "vendor-docs": "vendor docs",
+  "board-manifest": "board manifest",
+  "arduino-core": "arduino core",
 };
 
 const icon = computed(() => {
@@ -33,6 +38,10 @@ const icon = computed(() => {
       return "i-lucide-cpu";
     case "module":
       return "i-lucide-microchip";
+    case "board":
+      return "i-lucide-circuit-board";
+    case "usb-id":
+      return "i-lucide-usb";
     case "unknown":
       return "i-lucide-search-x";
     default:
@@ -41,6 +50,24 @@ const icon = computed(() => {
 });
 
 const siblings = computed(() => props.result.siblings ?? []);
+const boards = computed(() => props.result.boards ?? []);
+
+const siblingsLabel = computed(() => {
+  const n = siblings.value.length;
+  if (props.result.kind === "board") return `Also sold as ${n === 1 ? "this name" : "these names"}`;
+  return `${n} other ordering code${n > 1 ? "s" : ""} in this family`;
+});
+
+const boardsLabel = computed(() => {
+  const n = boards.value.length;
+  return n === 1
+    ? "1 development board uses this module"
+    : `${n} development boards use this module`;
+});
+
+const suggestionsLabel = computed(() =>
+  props.result.kind === "usb-id" ? "Boards known to use this ID" : "Did you mean",
+);
 </script>
 
 <template>
@@ -82,20 +109,25 @@ const siblings = computed(() => props.result.siblings ?? []);
     </div>
 
     <div v-if="result.suggestions?.length" class="chips">
-      <span class="chips-label">Did you mean</span>
+      <span class="chips-label">{{ suggestionsLabel }}</span>
       <button v-for="s in result.suggestions" :key="s" type="button" @click="emit('pick', s)">
         {{ s }}
       </button>
     </div>
 
     <details v-if="siblings.length" class="siblings">
-      <summary>
-        {{ siblings.length }} other ordering code{{ siblings.length > 1 ? "s" : "" }} in this family
-      </summary>
+      <summary>{{ siblingsLabel }}</summary>
       <div class="chips">
         <button v-for="s in siblings" :key="s" type="button" @click="emit('pick', s)">
           {{ s }}
         </button>
+      </div>
+    </details>
+
+    <details v-if="boards.length" class="siblings">
+      <summary>{{ boardsLabel }}</summary>
+      <div class="chips">
+        <button v-for="b in boards" :key="b" type="button" @click="emit('pick', b)">{{ b }}</button>
       </div>
     </details>
 

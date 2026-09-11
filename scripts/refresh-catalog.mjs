@@ -12,6 +12,7 @@
  */
 import { parse } from "node-html-parser";
 import { socParts } from "../src/data/socs.ts";
+import { devBoards } from "../src/data/boards.ts";
 import { moduleFamilies } from "../src/data/modules.ts";
 import { sources } from "../src/data/sources.ts";
 
@@ -43,6 +44,16 @@ async function liveSocParts() {
   return out;
 }
 
+async function liveDevBoards() {
+  const doc = await fetchDoc(sources.devkitListing);
+  const out = new Set();
+  for (const row of doc.querySelectorAll("tr.sheet-item")) {
+    const name = clean(text(row.querySelector(".devbd-name")));
+    if (name) out.add(name);
+  }
+  return out;
+}
+
 async function liveModuleParts() {
   const doc = await fetchDoc(sources.moduleListing);
   const out = new Map();
@@ -59,7 +70,24 @@ async function liveModuleParts() {
   return out;
 }
 
-const [liveSocs, liveModules] = await Promise.all([liveSocParts(), liveModuleParts()]);
+const [liveSocs, liveModules, liveBoards] = await Promise.all([
+  liveSocParts(),
+  liveModuleParts(),
+  liveDevBoards(),
+]);
+
+/**
+ * Entries on the DevKits listing that are not ESP development boards, so they are
+ * deliberately absent from the catalog rather than missing from it.
+ */
+const NOT_A_BOARD = new Set(["ESP-Prog-2"]);
+
+/** Only boards actually read off the DevKits listing can disappear from it. */
+const listedBoards = new Set(
+  devBoards
+    .filter((b) => b.vendor === "Espressif" && b.evidence === "vendor-docs")
+    .map((b) => b.name),
+);
 
 const knownSocs = new Set(socParts.map((p) => p.partNumber));
 const knownFamilies = new Set(moduleFamilies.map((f) => f.name));
@@ -82,6 +110,11 @@ const report = [
     label: "module families",
     added: [...liveModules.keys()].filter((x) => !knownFamilies.has(x)),
     removed: [...knownFamilies].filter((x) => !liveModules.has(x)),
+  },
+  {
+    label: "Espressif dev kits",
+    added: [...liveBoards].filter((x) => !listedBoards.has(x) && !NOT_A_BOARD.has(x)),
+    removed: [...listedBoards].filter((x) => !liveBoards.has(x)),
   },
   {
     label: "module ordering codes",

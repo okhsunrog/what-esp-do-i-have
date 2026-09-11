@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { devBoards } from "../data/boards";
 import { moduleFamilies } from "../data/modules";
 import { socParts } from "../data/socs";
 import { normalize } from "../lib/normalize";
@@ -7,7 +8,7 @@ import { normalize } from "../lib/normalize";
 const emit = defineEmits<{ pick: [value: string] }>();
 
 const query = ref("");
-const tab = ref<"soc" | "module">("module");
+const tab = ref<"soc" | "module" | "board">("module");
 
 const key = computed(() => normalize(query.value));
 
@@ -20,6 +21,17 @@ const socGroups = computed(() => {
     groups.set(part.family, list);
   }
   return [...groups];
+});
+
+const boardGroups = computed(() => {
+  const groups = new Map<string, typeof devBoards>();
+  for (const board of devBoards) {
+    if (key.value && !normalize(board.name + board.vendor).includes(key.value)) continue;
+    const list = groups.get(board.vendor) ?? [];
+    list.push(board);
+    groups.set(board.vendor, list);
+  }
+  return [...groups].sort((a, b) => b[1].length - a[1].length);
 });
 
 const moduleGroups = computed(() =>
@@ -54,6 +66,9 @@ const moduleGroups = computed(() =>
           <button type="button" role="tab" :aria-selected="tab === 'soc'" @click="tab = 'soc'">
             SoCs
           </button>
+          <button type="button" role="tab" :aria-selected="tab === 'board'" @click="tab = 'board'">
+            Dev boards
+          </button>
         </div>
         <UInput v-model="query" placeholder="Filter part numbers" size="md" autocomplete="off" />
       </div>
@@ -79,6 +94,26 @@ const moduleGroups = computed(() =>
           </button>
         </div>
         <p v-else class="group-empty">No ordering codes published yet.</p>
+      </section>
+    </div>
+
+    <div v-else-if="tab === 'board'" class="groups">
+      <section v-for="[vendor, list] in boardGroups" :key="vendor" class="group">
+        <header>
+          <span class="group-name group-name-static">{{ vendor }}</span>
+          <span class="group-meta">{{ list.length }} board{{ list.length > 1 ? "s" : "" }}</span>
+        </header>
+        <div class="chips">
+          <button
+            v-for="b in list"
+            :key="b.name"
+            type="button"
+            :title="`${b.family}${b.flashMb ? ` · ${b.flashMb} MB flash` : ''}`"
+            @click="emit('pick', b.name)"
+          >
+            {{ b.name }}
+          </button>
+        </div>
       </section>
     </div>
 
