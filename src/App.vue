@@ -40,8 +40,9 @@ watch(marking, syncUrl);
 <template>
   <UApp>
     <main class="min-h-screen">
-      <header class="shell flex items-center py-6">
+      <header class="shell site-header">
         <a class="brand" href="./" aria-label="What ESP do I have?">ESP?</a>
+        <UColorModeButton />
       </header>
 
       <section class="shell hero-section">
@@ -54,17 +55,16 @@ watch(marking, syncUrl);
 
         <form class="decoder" @submit.prevent>
           <label for="marking">MARKING</label>
-          <div class="decoder-row">
-            <UInput
-              id="marking"
-              v-model="marking"
-              size="xl"
-              placeholder="e.g. ESP32-C6-WROOM-1-N8"
-              autocomplete="off"
-              spellcheck="false"
-              class="decoder-input"
-            />
-          </div>
+          <UInput
+            id="marking"
+            v-model="marking"
+            size="xl"
+            placeholder="e.g. ESP32-C6-WROOM-1-N8"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            class="decoder-input"
+          />
           <p class="hint">
             Case and separators do not matter — <code>esp32 c6 wroom 1 n8</code> works too.
           </p>

@@ -70,7 +70,13 @@ const moduleGroups = computed(() =>
             Dev boards
           </button>
         </div>
-        <UInput v-model="query" placeholder="Filter part numbers" size="md" autocomplete="off" />
+        <UInput
+          v-model="query"
+          placeholder="Filter part numbers"
+          size="md"
+          autocomplete="off"
+          class="catalog-filter"
+        />
       </div>
     </div>
 
