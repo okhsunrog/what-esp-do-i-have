@@ -35,6 +35,11 @@ third-party tables:
 - [ESP-Packaging](https://docs.espressif.com/projects/esp-packaging/en/latest/) —
   the chip and module silk-marking conventions, transcribed in
   [`src/data/marking.ts`](src/data/marking.ts).
+- ESP-IDF, for GPIOs: the per-target tables in
+  `docs/en/api-reference/peripherals/gpio/<target>.inc` and the `SOC_GPIO_*`
+  masks in `components/soc/<target>/include/soc/soc_caps.h`.
+- The **Pin Definitions** table of each module datasheet, for which GPIOs a
+  module actually brings out to a pad, and the footnotes attached to them.
 
 Development boards are the one place this database leaves Espressif. A board is
 whatever its maker says it is, so each board row names its vendor and the source
@@ -77,12 +82,16 @@ src/data/types.ts        shared types
 src/data/socs.ts         SoC ordering codes
 src/data/modules.ts      module families and their ordering codes
 src/data/boards.ts       development boards, by vendor
+src/data/gpio.ts         per-series GPIO tables from ESP-IDF
+src/data/module-pins.ts  per-module pad detail (loaded on demand)
+src/data/board-pins.ts   pins a board's Arduino variant names (loaded on demand)
 src/data/marking.ts      ESP-Packaging silk-marking conventions
 src/data/corrections.ts  documented conflicts between Espressif sources
 src/data/sources.ts      source URLs
 src/lib/normalize.ts     input normalization
 src/lib/catalog.ts       lookup indexes
 src/lib/decoder.ts       the decoder
+src/lib/pins.ts          per-GPIO state model
 src/lib/drift.ts         catalog-vs-upstream comparison
 scripts/refresh-catalog.ts  scrapes the listings and reports drift
 ```
@@ -111,6 +120,15 @@ datasheet tables, which a person has to read before changing a row.
 - USB IDs do not identify a board. Espressif's native USB peripheral reports
   `0x303a:0x1001` on many different boards, and a board with a USB-to-UART bridge
   reports the bridge's ID instead.
+- A module's pin map is published only where our reading of its datasheet pin
+  table matches the GPIO count Espressif prints on the product listing — 42 of
+  the 66 modules with a datasheet. The rest are withheld rather than guessed at.
+- A board's GPIO map marks the pins its Arduino variant _names_. A pin left
+  unmarked is not certified free: a board can route a pin without naming it.
+- ESP32 GPIO20 is flagged "some packages only" because ESP-IDF's mask accepts it
+  while its GPIO table omits it — it is bonded out on PICO-style parts only.
+- Strapping pins are not marked per pin. ESP-IDF does not tag them in its table,
+  so the per-series notes point at the datasheet's Boot Configurations section.
 - Board coverage is broad but uneven: Espressif and Waveshare boards carry vendor
   documentation, while many smaller vendors are only present through build-system
   board definitions, which state less.
@@ -122,7 +140,7 @@ datasheet tables, which a person has to read before changing a row.
 ```bash
 vp install
 vp dev
-vp test           # 75 tests across normalization, decoding, drift and data integrity
+vp test           # 93 tests across normalization, decoding, GPIO maps, drift and data integrity
 vp check
 vp run build
 ```

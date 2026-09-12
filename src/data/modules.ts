@@ -1,5 +1,5 @@
 // AUTO-GENERATED from Espressif's official product listings and module datasheets.
-// Run `vp run catalog:check` to see what has changed on espressif.com since.
+// Run `vp run catalog:check` to see what has changed upstream since.
 // Do not hand-edit rows; add corrections to src/data/corrections.ts instead.
 
 import type { ModuleFamily } from "./types";
@@ -14,6 +14,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 0,
     sramKb: 520,
     socParts: ["ESP32-D0WD-V3"],
+    gpioCount: 0,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-du1906_esp32-du1906-u_datasheet_cn.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -28,6 +29,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 0,
     sramKb: 520,
     socParts: ["ESP32-D0WD-V3"],
+    gpioCount: 0,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-du1906_esp32-du1906-u_datasheet_cn.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -47,6 +49,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 28,
     sramKb: 520,
     socParts: ["ESP32-U4WDH"],
+    gpioCount: 28,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-mini-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -74,6 +77,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 28,
     sramKb: 520,
     socParts: ["ESP32-U4WDH"],
+    gpioCount: 28,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-mini-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -101,6 +105,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 27,
     sramKb: 520,
     socParts: ["ESP32-PICO-V3-02"],
+    gpioCount: 27,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 15, 19, 20, 21, 22, 25, 26, 27, 32, 33, 34, 35, 36, 37,
+      38, 39,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-pico-mini-02_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -123,6 +132,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 27,
     sramKb: 520,
     socParts: ["ESP32-PICO-V3-02"],
+    gpioCount: 27,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 15, 19, 20, 21, 22, 25, 26, 27, 32, 33, 34, 35, 36, 37,
+      38, 39,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-pico-mini-02_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -145,6 +159,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 0,
     sramKb: 520,
     socParts: ["ESP32-PICO-V3"],
+    gpioCount: 0,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-pico-v3-zero_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -168,6 +183,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 32,
     sramKb: 520,
     socParts: ["ESP32-S0WD"],
+    gpioCount: 32,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-solo-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -199,6 +215,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 32,
     sramKb: 520,
     socParts: ["ESP32-D0WDQ6"],
+    gpioCount: 32,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27,
+      32, 33, 34, 35, 36, 39,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -240,6 +261,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 26,
     sramKb: 520,
     socParts: ["ESP32-D0WD-V3", "ESP32-D0WDRH2-V3"],
+    gpioCount: 26,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -337,6 +359,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 26,
     sramKb: 520,
     socParts: ["ESP32-D0WD-V3", "ESP32-D0WDRH2-V3"],
+    gpioCount: 26,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -413,6 +436,7 @@ export const moduleFamilies: ModuleFamily[] = [
     dimensionsMm: "35.6 × 34.4 × 3.5",
     gpio: 41,
     socParts: ["ESP32-D0WD-V3"],
+    gpioCount: 41,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-da_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -445,6 +469,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 24,
     sramKb: 520,
     socParts: ["ESP32-D0WD"],
+    gpioCount: 24,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wrover-b_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -491,6 +516,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 24,
     sramKb: 520,
     socParts: ["ESP32-D0WD-V3", "ESP32-D0WDRH2-V3"],
+    gpioCount: 24,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -563,6 +589,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 24,
     sramKb: 520,
     socParts: ["ESP32-D0WD"],
+    gpioCount: 24,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wrover-b_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -609,6 +636,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 24,
     sramKb: 520,
     socParts: ["ESP32-D0WD-V3", "ESP32-D0WDRH2-V3"],
+    gpioCount: 24,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -681,6 +709,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -710,6 +740,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -739,6 +771,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-01c_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -768,6 +801,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-02c_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -797,6 +832,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-02c_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -826,6 +863,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 8,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 8,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-03_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -855,6 +893,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-04c_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -884,6 +924,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 5,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 5,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-05_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -913,6 +954,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 14,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 14,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-06c_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -952,6 +994,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 3,
     sramKb: 272,
     socParts: ["ESP8684H2X", "ESP8684H4X"],
+    gpioCount: 3,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8684-wroom-07_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -981,6 +1024,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 15,
     sramKb: 400,
     socParts: ["ESP32-C3FH4", "ESP32-C3FH4X", "ESP32-C3FH8X"],
+    gpioCount: 15,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c3-mini-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1054,6 +1099,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 15,
     sramKb: 400,
     socParts: ["ESP32-C3FH4X", "ESP32-C3FH4"],
+    gpioCount: 15,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c3-mini-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1105,6 +1152,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 15,
     sramKb: 400,
     socParts: ["ESP32-C3"],
+    gpioCount: 15,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c3-wroom-02_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1144,6 +1193,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 15,
     sramKb: 400,
     socParts: ["ESP32-C3"],
+    gpioCount: 15,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c3-wroom-02_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1183,6 +1234,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 15,
     sramKb: 400,
     socParts: ["ESP8685H4"],
+    gpioCount: 15,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8685-wroom-01_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1205,6 +1258,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 8,
     sramKb: 400,
     socParts: ["ESP8685H4"],
+    gpioCount: 8,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8685-wroom-03_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1227,6 +1281,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 13,
     sramKb: 400,
     socParts: ["ESP8685H4"],
+    gpioCount: 13,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8685-wroom-04_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1249,6 +1305,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 5,
     sramKb: 400,
     socParts: ["ESP8685H4"],
+    gpioCount: 5,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8685-wroom-05_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1271,6 +1328,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 15,
     sramKb: 400,
     socParts: ["ESP8685H4"],
+    gpioCount: 15,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8685-wroom-06_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1293,6 +1352,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 3,
     sramKb: 400,
     socParts: ["ESP8685H4"],
+    gpioCount: 3,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp8685-wroom-07_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1315,6 +1375,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 22,
     sramKb: 384,
     socParts: ["ESP32-C5HF4"],
+    gpioCount: 22,
     datasheetUrl: "https://documentation.espressif.com/esp32-c5-mini-1_datasheet_en.html",
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [
@@ -1341,6 +1402,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 22,
     sramKb: 384,
     socParts: ["ESP32-C5HF4"],
+    gpioCount: 22,
     datasheetUrl: "https://documentation.espressif.com/esp32-c5-mini-1_mini-1u_datasheet_en.html",
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [
@@ -1363,6 +1425,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 22,
     sramKb: 384,
     socParts: ["ESP32-C5HR8", "ESP32-C5HF4"],
+    gpioCount: 22,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 23, 24, 25, 26, 27, 28],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c5-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1446,6 +1510,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 22,
     sramKb: 384,
     socParts: ["ESP32-C5HR8", "ESP32-C5HF4"],
+    gpioCount: 22,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 23, 24, 25, 26, 27, 28],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c5-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1509,6 +1575,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 22,
     sramKb: 512,
     socParts: ["ESP32-C6FH4", "ESP32-C6FH8"],
+    gpioCount: 22,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c6-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1545,6 +1613,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 22,
     sramKb: 512,
     socParts: ["ESP32-C6FH4"],
+    gpioCount: 22,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c6-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1581,6 +1651,10 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 23,
     sramKb: 512,
     socParts: ["ESP32-C6"],
+    gpioCount: 23,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c6-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1617,6 +1691,10 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 23,
     sramKb: 512,
     socParts: ["ESP32-C6"],
+    gpioCount: 23,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c6-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1653,6 +1731,10 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 23,
     sramKb: 320,
     socParts: ["ESP32-C61HF4", "ESP32-C61NF8R8LA"],
+    gpioCount: 23,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 22, 23, 24, 25, 26, 27, 28, 29,
+    ],
     datasheetUrl: "https://documentation.espressif.com/esp32-c61-mini-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [
@@ -1685,6 +1767,10 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 23,
     sramKb: 320,
     socParts: ["ESP32-C61HF4", "ESP32-C61NF8R8LA"],
+    gpioCount: 23,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 22, 23, 24, 25, 26, 27, 28, 29,
+    ],
     datasheetUrl: "https://documentation.espressif.com/esp32-c61-mini-1_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [
@@ -1749,6 +1835,10 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 23,
     sramKb: 320,
     socParts: ["ESP32-C61HR2", "ESP32-C61HR8"],
+    gpioCount: 23,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 22, 23, 24, 25, 26, 27, 28, 29,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-c61-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1791,6 +1881,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 20,
     sramKb: 1024,
     socParts: ["ESP32-E22"],
+    gpioCount: 20,
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [],
   },
@@ -1803,6 +1894,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 19,
     sramKb: 320,
     socParts: ["ESP32-H2FH2S", "ESP32-H2FH4S"],
+    gpioCount: 19,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 22, 23, 24, 25, 26, 27],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-h2-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1832,6 +1925,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 19,
     sramKb: 320,
     socParts: ["ESP32-H2FH2S", "ESP32-H2FH4S"],
+    gpioCount: 19,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 22, 23, 24, 25, 26, 27],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-h2-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1861,6 +1956,8 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 19,
     sramKb: 320,
     socParts: ["ESP32-H2FH2S", "ESP32-H2FH4S"],
+    gpioCount: 19,
+    exposedGpios: [0, 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 22, 23, 24, 25, 26, 27],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-h2-wroom-02c_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1890,6 +1987,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 19,
     sramKb: 320,
     socParts: ["ESP32-H21HF4"],
+    gpioCount: 19,
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [],
   },
@@ -1902,6 +2000,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 33,
     sramKb: 384,
     socParts: ["ESP32-H4HR2"],
+    gpioCount: 33,
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [],
   },
@@ -1914,6 +2013,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2FH4", "ESP32-S2FN4R2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-mini-1_esp32-s2-mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -1961,6 +2065,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2FH4", "ESP32-S2FN4R2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-mini-1_esp32-s2-mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2008,6 +2117,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2FH4", "ESP32-S2FN4R2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-mini-2_esp32-s2-mini-2u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2039,6 +2153,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2FH4", "ESP32-S2FN4R2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-mini-2_esp32-s2-mini-2u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2070,6 +2189,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 36,
     sramKb: 320,
     socParts: ["ESP32-S2", "ESP32-S2R2"],
+    gpioCount: 36,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 33, 34, 35, 36,
+      37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-solo_esp32-s2-solo-u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2114,6 +2238,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 36,
     sramKb: 320,
     socParts: ["ESP32-S2", "ESP32-S2R2"],
+    gpioCount: 36,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 33, 34, 35, 36,
+      37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-solo-2_esp32-s2-solo-2u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2168,6 +2297,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 36,
     sramKb: 320,
     socParts: ["ESP32-S2", "ESP32-S2R2"],
+    gpioCount: 36,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 33, 34, 35, 36,
+      37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-solo-2_esp32-s2-solo-2u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2213,6 +2347,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 36,
     sramKb: 320,
     socParts: ["ESP32-S2", "ESP32-S2R2"],
+    gpioCount: 36,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 33, 34, 35, 36,
+      37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-solo_esp32-s2-solo-u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2257,6 +2396,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-wroom_esp32-s2-wroom-i_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2285,6 +2429,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-wroom_esp32-s2-wroom-i_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2313,6 +2462,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-wrover_esp32-s2-wrover-i_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2343,6 +2497,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 37,
     sramKb: 320,
     socParts: ["ESP32-S2"],
+    gpioCount: 37,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 26, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s2-wrover_esp32-s2-wrover-i_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2372,6 +2531,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 39,
     sramKb: 512,
     socParts: ["ESP32-S3FN8", "ESP32-S3FH4R2"],
+    gpioCount: 39,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s3-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2403,6 +2563,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 39,
     sramKb: 512,
     socParts: ["ESP32-S3FN8", "ESP32-S3FH4R2"],
+    gpioCount: 39,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s3-mini-1_mini-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2434,6 +2595,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 36,
     sramKb: 512,
     socParts: ["ESP32-S3", "ESP32-S3RH2", "ESP32-S3R8"],
+    gpioCount: 36,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 35, 36, 37, 38,
+      39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2547,6 +2713,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 36,
     sramKb: 512,
     socParts: ["ESP32-S3", "ESP32-S3RH2", "ESP32-S3R8"],
+    gpioCount: 36,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 35, 36, 37, 38,
+      39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2654,6 +2825,11 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 33,
     sramKb: 512,
     socParts: ["ESP32-S3R16V", "ESP32-S3R8V"],
+    gpioCount: 33,
+    exposedGpios: [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 38, 39, 40, 41,
+      42, 43, 44, 45, 46, 47, 48,
+    ],
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-2_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2698,6 +2874,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 54,
     sramKb: 512,
     socParts: ["ESP32-S31NRV16", "ESP32-S31NRV32"],
+    gpioCount: 54,
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [],
   },
@@ -2710,6 +2887,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 54,
     sramKb: 512,
     socParts: ["ESP32-S31NRV16"],
+    gpioCount: 54,
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [],
   },
@@ -2722,6 +2900,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 54,
     sramKb: 512,
     socParts: ["ESP32-S31NRV16", "ESP32-S31NRV32"],
+    gpioCount: 54,
     datasheetUrl: "https://documentation.espressif.com/esp32-s31-wroom-3_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
     parts: [
@@ -2791,6 +2970,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 54,
     sramKb: 512,
     socParts: ["ESP32-S31NRV16"],
+    gpioCount: 54,
     datasheetUrl:
       "https://documentation.espressif.com/esp32-s31-wroom-3_wroom-3u_datasheet_en.html",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2817,6 +2997,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 11,
     sramKb: 160,
     socParts: ["ESP8266EX"],
+    gpioCount: 11,
     datasheetUrl:
       "http://espressif.com/sites/default/files/documentation/0c-esp-wroom-02_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2836,6 +3017,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 11,
     sramKb: 160,
     socParts: ["ESP8266EX"],
+    gpioCount: 11,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp-wroom-02u_esp-wroom-02d_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",
@@ -2875,6 +3057,7 @@ export const moduleFamilies: ModuleFamily[] = [
     gpio: 11,
     sramKb: 160,
     socParts: ["ESP8266EX"],
+    gpioCount: 11,
     datasheetUrl:
       "https://www.espressif.com/sites/default/files/documentation/esp-wroom-02u_esp-wroom-02d_datasheet_en.pdf",
     sourceUrl: "https://www.espressif.com/en/products/modules",

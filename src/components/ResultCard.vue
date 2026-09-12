@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { DecodeResult } from "../lib/decoder";
+import PinGrid from "./PinGrid.vue";
 
 const props = defineProps<{ result: DecodeResult }>();
 const emit = defineEmits<{ pick: [value: string] }>();
@@ -123,6 +124,15 @@ const suggestionsLabel = computed(() =>
         </button>
       </div>
     </details>
+
+    <PinGrid
+      v-if="result.pins"
+      :key="result.title"
+      :family="result.pins.family"
+      :module-name="result.pins.moduleName"
+      :board-name="result.pins.boardName"
+      :exposed-gpios="result.pins.exposedGpios"
+    />
 
     <details v-if="boards.length" class="siblings">
       <summary>{{ boardsLabel }}</summary>

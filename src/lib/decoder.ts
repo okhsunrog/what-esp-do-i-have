@@ -61,6 +61,13 @@ export interface DecodeResult {
   siblings?: string[];
   /** Development boards that carry this module. */
   boards?: string[];
+  /** Enough to render the GPIO map for this result, when one applies. */
+  pins?: {
+    family: string;
+    moduleName?: string;
+    boardName?: string;
+    exposedGpios?: number[];
+  };
   suggestions?: string[];
 }
 
@@ -135,6 +142,7 @@ function decodeSoc(part: SocPart, normalized: string, input: string): DecodeResu
     notes,
     corrections: correctionsFor(part.partNumber, part.family),
     links,
+    pins: { family: part.family },
   };
 }
 
@@ -222,6 +230,9 @@ function decodeModulePart(
     notes,
     corrections: correctionsFor(part.partNumber, family.name, family.socFamily),
     links: moduleLinks(family),
+    pins: family.exposedGpios
+      ? { family: family.socFamily, moduleName: family.name, exposedGpios: family.exposedGpios }
+      : { family: family.socFamily },
     siblings: family.parts.map((p) => p.partNumber).filter((p) => p !== part.partNumber),
     boards: boardsUsingModule(family.name)
       .slice(0, 24)
@@ -267,6 +278,9 @@ function decodeModuleFamily(family: ModuleFamily, normalized: string, input: str
     notes,
     corrections: correctionsFor(family.name, family.socFamily),
     links: moduleLinks(family),
+    pins: family.exposedGpios
+      ? { family: family.socFamily, moduleName: family.name, exposedGpios: family.exposedGpios }
+      : { family: family.socFamily },
     siblings: family.parts.map((p) => p.partNumber),
   };
 }
@@ -522,6 +536,12 @@ function decodeBoard(board: DevBoard, normalized: string, input: string): Decode
     notes,
     corrections: correctionsFor(board.module, board.chip, board.family),
     links,
+    pins: {
+      family: board.family,
+      boardName: board.name,
+      moduleName: moduleFamilyIndex.get(normalize(board.module ?? ""))?.name,
+      exposedGpios: moduleFamilyIndex.get(normalize(board.module ?? ""))?.exposedGpios,
+    },
     siblings: board.aliases,
   };
 }

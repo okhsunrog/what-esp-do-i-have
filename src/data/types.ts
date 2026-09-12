@@ -66,9 +66,67 @@ export interface ModuleFamily {
   sramKb?: number;
   /** SoC ordering codes Espressif lists for this family. */
   socParts: string[];
+  /** GPIO count Espressif prints on the product listing. */
+  gpioCount?: number;
+  /**
+   * GPIOs broken out to pads. Present only when our reading of the datasheet's
+   * pin table matched `gpioCount` exactly; otherwise withheld rather than guessed.
+   */
+  exposedGpios?: number[];
   datasheetUrl?: string;
   sourceUrl: string;
   parts: ModulePart[];
+}
+
+/** One GPIO of a SoC, as ESP-IDF documents it. */
+export interface SocGpioPin {
+  gpio: number;
+  /** Analog function, e.g. `ADC1_CH0`. */
+  analog?: string;
+  /** RTC/LP GPIO name, when the pin has one. */
+  lowPower?: string;
+  /** ESP-IDF's restriction tag: `SPI0/1`, `USB-JTAG`, `JTAG`, `GPI`, `TXD`, `RXD`. */
+  restriction?: string;
+  /** The tag was derived from ESP-IDF's legend prose, not its table column. */
+  restrictionFromLegend?: boolean;
+  /** Pin can be read but never driven (e.g. ESP32 GPIO34-39). */
+  inputOnly?: boolean;
+  /**
+   * SOC_GPIO_VALID_GPIO_MASK marks the pin valid but ESP-IDF's GPIO table omits
+   * it, because it is only bonded out on some packages (ESP32 GPIO20).
+   */
+  packageDependent?: boolean;
+}
+
+/** Every GPIO of one SoC series, plus Espressif's own caveats. */
+export interface SocGpioMap {
+  family: string;
+  /** ESP-IDF target name, e.g. `esp32s3`. */
+  target: string;
+  /** Physical GPIO count from SOC_GPIO_PIN_COUNT. */
+  pinCount?: number;
+  /** What this series calls its low-power GPIO domain (`RTC GPIO` / `LP GPIO`). */
+  lowPowerLabel?: string;
+  pins: SocGpioPin[];
+  /** Espressif's explanatory notes, carried verbatim. */
+  legend: { tag?: string; text: string }[];
+  sourceUrl: string;
+}
+
+/** A module pad, from the Pin Definitions table of its datasheet. */
+export interface ModulePinDetail {
+  /** Pad name as printed, e.g. `IO35`. */
+  pad: string;
+  /** Comma-separated alternate functions. */
+  functions: string;
+  /** Datasheet footnote attached to this pad, e.g. the Octal-PSRAM warning. */
+  caveat?: string;
+}
+
+/** A pin an Arduino variant gives a name to, so it is already spoken for. */
+export interface NamedPin {
+  gpio: number;
+  roles: string[];
 }
 
 /**
